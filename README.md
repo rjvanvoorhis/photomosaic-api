@@ -6,7 +6,9 @@ An API for turning gifs and images into photomosaics
 
 clone the repository
 
-```git clone {url/for/repository}```
+```bash
+git clone https://github.com/rjvanvoorhis/photomosaic-api.git
+```
 
 Set these Environmental Variables
 

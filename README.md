@@ -31,9 +31,9 @@ take a look at the SwaggerUI
 
 ```bash 
 curl -X POST "http://127.0.0.1:5000/api/v1/photomosaic/registration"
- -H "Content-Type: application/json" -d {...}
+ -H "Content-Type: application/json" -d "{ \"username\": \"my_username\", \"password\": \"my_password\"
+ \"email\": \"my_email@domain.com\"}"
 ```
-The payload should contain username, password, and email
 
 ### With that username, upload a file
 

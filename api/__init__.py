@@ -1,6 +1,6 @@
 from flask_restplus import Api
 from api.base import Login, HealthCheck, Images, Registration
-from api.user import UserUpload, GalleryItem, Gallery, Pending, PendingJson
+from api.user import UserUpload, GalleryItem, Gallery, Pending, PendingJson, UserUploadItem
 from documentation.namespaces import base_ns
 from documentation.namespaces import user_ns
 

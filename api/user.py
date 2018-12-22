@@ -1,12 +1,16 @@
 from resources import BaseResource
 from resources.user_resource import UserResource
+from flask import request
 from werkzeug.datastructures import FileStorage
 from documentation.namespaces import user_ns
 from documentation.models import gallery_item, message_model, message_post, upload_img, post_response
 
-
 upload_parser = user_ns.parser()
 upload_parser.add_argument('file', location='files', type=FileStorage, required=True)
+
+paging_parser = user_ns.parser()
+paging_parser.add_argument('skip', type=int)
+paging_parser.add_argument('limit', type=int)
 
 
 class BaseUserResource(BaseResource):
@@ -17,9 +21,13 @@ class BaseUserResource(BaseResource):
 
 @user_ns.route('/gallery')
 class Gallery(BaseUserResource):
+    @user_ns.expect(paging_parser)
     def get(self, username):
+        args = paging_parser.parse_args()
         """Get all gallery items"""
-        return self.resource.get_gallery(username)
+        results = self.resource.get_gallery(username, **args)
+        self.page_builder.add_navigation(results, request.base_url, **args)
+        return results
 
     @user_ns.expect(message_post, validate=True)
     def post(self, username):
@@ -64,3 +72,21 @@ class UserUpload(BaseUserResource):
     @user_ns.marshal_with(post_response, as_list=True)
     def get(self, username):
         return self.resource.get_uploads(username)
+
+    @user_ns.expect(post_response)
+    def delete(self, username):
+        payload = user_ns.payload
+        return self.resource.delete_uploads_item(username, payload)
+
+
+@user_ns.route('/uploads/<string:file_id>')
+class UserUploadItem(BaseUserResource):
+
+    @user_ns.marshal_with(post_response)
+    def get(self, username, file_id):
+        return self.resource.get_upload(username, file_id)
+
+    def delete(self, username, file_id):
+        return self.resource.delete_upload_by_id(username, file_id)
+
+

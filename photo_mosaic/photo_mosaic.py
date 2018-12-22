@@ -4,7 +4,6 @@ import os
 
 from PIL import Image
 
-from helpers.file_helpers import prepend_to_path
 from photo_mosaic.image_stitcher import ImageStitcher
 from photo_mosaic.tile_processor import TileProcessor
 from photo_mosaic.progress_bar import parallel_process
@@ -57,8 +56,8 @@ class ComparisonMethod(object):
 
 
 class PhotoMosaic(object):
-    MAX_SIZE = 1880
-    MAX_GIF_SIZE = 600
+    MAX_SIZE = 2500
+    MAX_GIF_SIZE = 800
     COMPARISON_CONFIG = {
         'euclid': euclid,
         'city_block': city_block

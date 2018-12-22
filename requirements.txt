@@ -1,5 +1,6 @@
 flask
 flask-restplus
+flask_cors
 gunicorn
 pillow
 redis==2.10.6

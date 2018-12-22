@@ -33,11 +33,20 @@ class UserAccessor(MongoDbAccessor):
             return False
         return check_password_hash(user['password_hash'], password)
 
+    def get_paginated_list(self, username, field, skip=0, limit=None, sort=None):
+        projection = {'_id': 0, field: 1}
+        query = {'username': username}
+        unwind = f'${field}'
+        cursor = self.get_paginated_results(query, projection, unwind, skip, limit, sort)
+        results = [item.get(field, {}) for item in cursor.get('results', [])]
+        cursor['results'] = results
+        return cursor
+
     def get_list(self, username, field):
         projection = {'_id': 0, field: 1}
         query = {'username': username}
-        gallery = self.find_one(query, projection)
-        return gallery.get(field, [])
+        results = self.collection.find_one(query, projection)
+        return results.get(field, [])
 
     def get_list_item(self, username, field, field_id):
         items = self.get_list(username, field)

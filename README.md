@@ -6,7 +6,9 @@ An API for turning gifs and images into photomosaics
 
 clone the repository
 
-```git clone {url/for/repository}```
+```bash
+git clone https://github.com/rjvanvoorhis/photomosaic-api.git
+```
 
 Set these Environmental Variables
 
@@ -31,9 +33,9 @@ take a look at the SwaggerUI
 
 ```bash 
 curl -X POST "http://127.0.0.1:5000/api/v1/photomosaic/registration"
- -H "Content-Type: application/json" -d {...}
+ -H "Content-Type: application/json" -d "{ \"username\": \"my_username\", \"password\": \"my_password\"
+ \"email\": \"my_email@domain.com\"}"
 ```
-The payload should contain username, password, and email
 
 ### With that username, upload a file
 
